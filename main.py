@@ -34,7 +34,21 @@ else:
 
 year = 2039
 
-if year==2039:
+if year == 2039:
     print("hello")
 else:
     print("nooooo")
+
+
+age = 14
+
+ask = int(input("Quelle est mon age ?"))
+
+if ask == age:
+    print("Bravo tu as trouvé")
+elif ask < age:
+    print("non, trop bas")
+elif ask > age:
+    print("trop haut")
+else:
+    print("choisi un nombre")
