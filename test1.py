@@ -26,5 +26,5 @@ if devinette == release_year:
     print("Bravo, bonne reponse !")
 elif devinette < release_year:
     print("Trop ancien")
-elif devinette < release_year:
+elif devinette > release_year:
     print("Trop recent")
