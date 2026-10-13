@@ -1,11 +1,13 @@
 import json
 import os
+import ssl
 import subprocess
 from html.parser import HTMLParser
 from urllib.parse import parse_qs, urlencode, urlsplit
 from urllib.request import Request, urlopen
 
 from openai import OpenAI
+import truststore
 
 
 class DuckDuckGoResultsParser(HTMLParser):
@@ -51,7 +53,8 @@ def search_web(query):
         search_url,
         headers={"User-Agent": "Mozilla/5.0 (compatible; LearnPython/1.0)"},
     )
-    with urlopen(request, timeout=15) as response:
+    tls_context = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    with urlopen(request, timeout=15, context=tls_context) as response:
         page = response.read().decode(
             response.headers.get_content_charset() or "utf-8", errors="replace"
         )
