@@ -31,7 +31,7 @@ tools = [
 messages = [
     {
         "role": "system",
-        "content": "Call the open_chrome tool. Do not respond without calling it.",
+        "content": "Answer the user's request helpfully. Use the open_chrome tool only when it is relevant.",
     },
     {"role": "user", "content": input("Enter your prompt: ")},
 ]
@@ -40,15 +40,13 @@ response = client.chat.completions.create(
     messages=messages,
     model="openai/gpt-oss-120b",
     tools=tools,
-    tool_choice={
-        "type": "function",
-        "function": {"name": "open_chrome"},
-    },
+    tool_choice="auto",
 )
 message = response.choices[0].message
 
 if not message.tool_calls:
-    raise RuntimeError("The model was required to call open_chrome but did not.")
+    print(message.content or "")
+    raise SystemExit(0)
 
 messages.append(message)
 for tool_call in message.tool_calls:
